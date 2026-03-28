@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreClasses\Package.cs" />
+    <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Exceptions\InvalidPackageException.cs" />
+    <Compile Include="Exceptions\OverCapacityException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vehicle.cs" />

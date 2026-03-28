@@ -5,26 +5,71 @@ namespace Final_Project_OOP.CoreClasses
 {
     public class Package
     {
-        public int Id { get; private set; }
-        public double Weight { get; private set; }
-        public int PriorityLevel { get; private set; }
-        public string Destination { get; private set; }
-        public string Status { get; private set; }
+
+        private int id;
+        private double weight;
+        private int priorityLevel;
+        private string destination;
+        private string status;
+
+        public void SetId(int id)
+        {
+            this.id = id;
+        }
+        public int GetID()
+        {
+            return id;
+        }
+        public void SetWeight(double weight)
+        {
+            this.weight = weight;
+        }
+        public double GetWeight()
+        {
+            return weight;
+        }
+        public void SetPriorityLevel(int priorityLevel)
+        {
+            this.priorityLevel = priorityLevel;
+        }
+        public int GetPriorityLevel()
+        {
+            return priorityLevel;
+        }
+        public void SetDestination(string destination)
+        {
+            this.destination = destination;
+        }
+        public string GetDestination()
+        {
+            return destination;
+        }
+        public void SetStatus(string status)
+        {
+            this.status = status;
+        }
+        public string GetStatus() { return status; }
 
         public Package(int id, double weight, int priorityLevel, string destination, string status)
         {
+            // Validate inputs
+
             VerifyId(id);
             VerifyWeight(weight);
             VerifyPriorityLevel(priorityLevel);
             VerifyDestination(destination);
             VerifyStatus(status);
 
-            Id = id;
-            Weight = weight;
-            PriorityLevel = priorityLevel;
-            Destination = destination;
-            Status = status;
+            // Create object
+
+            SetId(id);
+            SetWeight(weight);
+            SetPriorityLevel(priorityLevel);
+            SetDestination(destination);
+            SetStatus(status);
         }
+
+        // Input validations 
 
         private void VerifyId(int id)
         {
@@ -78,24 +123,29 @@ namespace Final_Project_OOP.CoreClasses
                 throw new InvalidPackageException("Invalid status...");
             }
 
-            Status = status;
+            SetStatus(status);
         }
 
         public double CalculatePriorityScore(Package package)
         {
             int PriorityWeightFactor = 10;
-            double score = (package.PriorityLevel * PriorityWeightFactor) - package.Weight;
+            double score = (package.GetPriorityLevel() * PriorityWeightFactor) - package.GetWeight();
 
             return score;
         }
 
         public bool IsHeavy(Package package)
         {
-            if (package.Weight > 10)
+            if (package.GetWeight() > 10)
             {
                 return true;
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            return $"ID: {id} - Weight: {weight} - Priority Level: {priorityLevel} - Destination: {destination} - Status: {status}";
         }
     }
 }

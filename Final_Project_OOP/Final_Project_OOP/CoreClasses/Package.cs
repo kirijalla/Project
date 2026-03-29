@@ -16,7 +16,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             this.id = id;
         }
-        public int GetID()
+        public int GetId()
         {
             return id;
         }

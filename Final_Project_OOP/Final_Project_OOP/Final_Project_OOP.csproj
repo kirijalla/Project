@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreClasses\Package.cs" />
+    <Compile Include="CoreClasses\Warehouse.cs" />
     <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Exceptions\InvalidPackageException.cs" />

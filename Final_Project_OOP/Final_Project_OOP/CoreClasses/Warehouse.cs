@@ -2,6 +2,7 @@
 using Final_Project_OOP.CoreClasses;
 using System.Collections.Generic;
 using Final_Project_OOP.Exceptions;
+using System;
 
 public class Warehouse
 {
@@ -33,17 +34,52 @@ public class Warehouse
 
     public List<Package> GetListPackages()
     {
+        List<Package> packages = new List<Package>();
+
+        foreach (Package package in this.packages)
+        {
+            packages.Add(package);
+        }
+
+        if (packages.Count < 1)
+        {
+            return null;
+        }
         return packages;
     }
 
     public List<Vehicle> GetListVehicles()
     {
-        return this.vehicles;
+        List<Vehicle> vehicles = new List<Vehicle>();
+
+        foreach (Vehicle vehicle in this.vehicles)
+        {
+            vehicles.Add(vehicle);
+        }
+
+        if (vehicles.Count < 1)
+        {
+            return null;
+        }
+
+        return vehicles;
     }
 
     public List<Worker> GetListWorkers()
     {
-        return this.workers;
+        List<Worker> workers = new List<Worker>();
+
+        foreach (Worker worker in this.workers)
+        {
+            workers.Add(worker);
+        }
+
+        if (workers.Count < 1)
+        {
+            return null;
+        }
+
+        return workers;
     }
 
     private void ValidateName(string name)
@@ -58,14 +94,14 @@ public class Warehouse
     {
         if (worker == null)
         {
-            throw new InvalidDataException("Worker cannot be null.");
+            throw new InvalidDataException("[ERROR] - Worker cannot be null.");
         }
 
         foreach (Worker existingWorker in workers)
         {
             if (existingWorker.Getid() == worker.Getid())
             {
-                throw new InvalidDataException("Duplicate worker ID.");
+                throw new InvalidDataException($"[ERROR] - A worker with ID {worker.Getid()} already exists");
             }
         }
 
@@ -93,9 +129,9 @@ public class Warehouse
     }
     public void RemovePackage(Package packageId)
     {
-        if (packageId.GetId() == null)
+        if (packageId.GetId() == 0)
         {
-            throw new InvalidPackageException("[ERROR] - Package cannot be null");
+            throw new InvalidPackageException("[ERROR] - Package cannot be null or 0");
         }
         packages.Remove(packageId);
     }
@@ -109,7 +145,7 @@ public class Warehouse
         {
             if (existingVehicle.Getid() == vehicle.Getid())
             {
-                throw new InvalidDataException("Duplicate worker ID.");
+                throw new InvalidDataException($"[ERROR] - A vehicle with ID {vehicle.Getid()} already exists");
             }
         }
         vehicles.Add(vehicle);
@@ -148,6 +184,10 @@ public class Warehouse
     }
     public List<Package> GetPendingPackages()
     {
+        if (packages.Count < 1)
+        {
+            throw new InvalidDataException("[ERROR] - Packages list is empty");
+        } 
         List<Package> pendingPackages = new List<Package>();
         for (int i = 0; i < packages.Count; i++)
         {
@@ -160,11 +200,17 @@ public class Warehouse
     }
     public Worker AssignWorker()
     {
+        if (workers.Count < 1)
+        {
+            throw new InvalidDataException("[ERROR] - Worker list is empty");
+        }
         for (int i = 0; i < workers.Count; i++)
         {
             if (workers[i].GetIsAvailable() == true)
             {
-                return workers[i];
+                workers[i].SetIsAvailable(false);
+                return workers[i]; // Returning the first available worker
+                
             }
         }
         return null;

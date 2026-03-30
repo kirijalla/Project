@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreClasses\DeliverySystem.cs" />
     <Compile Include="CoreClasses\Package.cs" />
     <Compile Include="CoreClasses\Warehouse.cs" />
     <Compile Include="Exceptions\InvalidDataException.cs" />

@@ -75,7 +75,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (id <= 0)
             {
-                throw new InvalidPackageException("Invalid ID; ID must be greater than 0.");
+                throw new InvalidPackageException("[ERROR] - Invalid ID; ID must be greater than 0.");
             }
         }
 
@@ -83,7 +83,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (weight <= 0)
             {
-                throw new InvalidPackageException("Invalid weight; weight must be greater than 0.");
+                throw new InvalidPackageException("[ERROR] - Invalid weight; weight must be greater than 0.");
             }
         }
 
@@ -91,7 +91,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (level < 1 || level > 5)
             {
-                throw new InvalidPackageException("Invalid level; must be between 1 and 5.");
+                throw new InvalidPackageException("[ERROR] - Invalid level; must be between 1 and 5.");
             }
         }
 
@@ -99,7 +99,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (string.IsNullOrWhiteSpace(destination))
             {
-                throw new InvalidPackageException("Invalid destination; empty input.");
+                throw new InvalidPackageException("[ERROR] - Invalid destination; empty input.");
             }
         }
 
@@ -107,12 +107,12 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (string.IsNullOrWhiteSpace(status))
             {
-                throw new InvalidPackageException("Invalid status; empty status.");
+                throw new InvalidPackageException("[ERROR] - Invalid status; empty status.");
             }
 
             if (status != "Pending" && status != "Assigned" && status != "Delivered")
             {
-                throw new InvalidPackageException("Invalid status; status must be 'Pending', 'Assigned', or 'Delivered'.");
+                throw new InvalidPackageException("[ERROR] - Invalid status; status must be 'Pending', 'Assigned', or 'Delivered'.");
             }
         }
 
@@ -120,10 +120,15 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (status != "Pending" && status != "Assigned" && status != "Delivered")
             {
-                throw new InvalidPackageException("Invalid status...");
+                throw new InvalidPackageException("[ERROR] - Invalid status; Please type 'Pending' / 'Assigned' / 'Delivered'");
             }
 
             SetStatus(status);
+        }
+
+        public void UpdatePriorityLevel()
+        {
+            priorityLevel++;
         }
 
         public double CalculatePriorityScore(Package package)

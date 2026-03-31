@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Final_Project_OOP.Exceptions;
 
 namespace Final_Project_OOP
 {
@@ -27,8 +28,8 @@ namespace Final_Project_OOP
         public void SetIsAvailable(bool isAvailable) { this.isAvailable = isAvailable; }
 
         public void SetCapacity(double capacity) {
-            if (capacity > 0) { capacity = maxCapacity; }
-            else {/*Mondongo*/ }
+            if (capacity <= 0) { throw new InvalidDataException("invalid name"); }
+            else { capacity = maxCapacity; }
         }
         public double GetRemainingCapacity() 
         {

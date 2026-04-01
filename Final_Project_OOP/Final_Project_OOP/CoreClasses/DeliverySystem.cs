@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Final_Project_OOP.Exceptions;
+using Final_Project_OOP.DataStructures;
+using System.Threading.Tasks;
 
 namespace Final_Project_OOP.CoreClasses
 {
@@ -13,11 +12,16 @@ namespace Final_Project_OOP.CoreClasses
         private List<Warehouse> warehouses;
         private List<Package> allPackages;
 
+        private List<Package> deliverPackages = new List<Package>();
+        private CustomQueue<Package> remainingPackages = new CustomQueue<Package>();
+
+
         public DeliverySystem()
         {
             this.warehouses = new List<Warehouse>();
             this.allPackages = new List<Package>();
         }
+
 
         public List<Package> GetPackages()
         {
@@ -64,61 +68,62 @@ namespace Final_Project_OOP.CoreClasses
             return null;
         }
 
-        public void ProcessDeliveries()
+        private void ProcessDeliveries()
         {
-            foreach (Package package in allPackages)
-            {
-                if (package.GetStatus() != "Assigned" && package.GetPriorityLevel() != 5)
-                {
-                    continue;
-                }
 
-                foreach (Warehouse warehouse in warehouses)
-                {
-                    Vehicle bestVehicle = warehouse.FindBestVehicle(package);
-                    Worker availableWorker = warehouse.AssignWorker();
-
-                    if (bestVehicle != null && availableWorker != null)
-                    {
-                        double currentLoad = bestVehicle.GetCurrentLoad();
-
-                        if (currentLoad + package.GetWeight() <= bestVehicle.GetmaxCapacity())
-                        {
-                            List<Package> packagesToDeliver = new List<Package>();
-                            packagesToDeliver.Add(package);
-
-                            availableWorker.PerformTask();
-                            bestVehicle.Deliver(packagesToDeliver);
-                            package.UpdateStatus("Delivered");
-
-                            break;
-                        }
-                    }
-                }
-            }
         }
 
         public void SimulateDay()
         {
-            Console.WriteLine("Simulated day.");
-            int count = 0;
-            foreach(Package package in allPackages)
+            allPackages.Clear();
+            deliverPackages.Clear();
+            remainingPackages.Clear();
+
+            foreach (Warehouse warehouse in warehouses)
+            {
+                List<Package> packages = warehouse.GetListPackages();
+
+                foreach (Package package in packages)
+                {
+                    if (package.GetStatus() != "Delivered")
+                    {
+                        allPackages.Add(package);
+                    }
+                }
+            }
+
+            foreach (Package package in allPackages)
             {
                 if (package.GetStatus() == "Assigned" && package.GetPriorityLevel() == 5)
                 {
-                    count++;
+                    deliverPackages.Add(package);
                 }
-            }
-            Console.WriteLine($"Packages delivered: {count}");          
-            ProcessDeliveries();
-            foreach (Package package in allPackages)
-            {
-                if (package.GetStatus() == "Pending")
+                else
                 {
-                    package.UpdateStatus("Assigned");
+                    remainingPackages.Enqueue(package);
                 }
-                package.UpdatePriorityLevel();
             }
+
+            while (!remainingPackages.IsEmpty())
+            {
+                Package validatePackage = remainingPackages.Dequeue();
+
+                validatePackage.UpgradePriorityLevel();
+                
+                if (validatePackage.GetPriorityLevel() == 5)
+                {
+                    validatePackage.UpdateStatus("Assigned");
+                }
+                if (validatePackage.CalculatePriorityScore(validatePackage) > 20 && validatePackage.GetPriorityLevel() != 5)
+                {
+                    validatePackage.OverridePriorityLevel(5);
+                    validatePackage.UpdateStatus("Assigned");
+                }
+            }
+
+            ProcessDeliveries();
+
+            Console.WriteLine($"Day has been simulated");
         }
 
         public void SortPackages()

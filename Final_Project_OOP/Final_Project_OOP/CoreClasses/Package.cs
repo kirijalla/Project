@@ -50,7 +50,7 @@ namespace Final_Project_OOP.CoreClasses
         }
         public string GetStatus() { return status; }
 
-        public Package(int id, double weight, int priorityLevel, string destination, string status)
+        public Package(int id, double weight, int priorityLevel, string destination)
         {
             // Validate inputs
 
@@ -58,7 +58,6 @@ namespace Final_Project_OOP.CoreClasses
             VerifyWeight(weight);
             VerifyPriorityLevel(priorityLevel);
             VerifyDestination(destination);
-            VerifyStatus(status);
 
             // Create object
 
@@ -66,7 +65,15 @@ namespace Final_Project_OOP.CoreClasses
             SetWeight(weight);
             SetPriorityLevel(priorityLevel);
             SetDestination(destination);
-            SetStatus(status);
+            if (priorityLevel == 5)
+            {
+                this.status = "Assigned";
+            }
+            else
+            {
+                this.status = "Pending";
+            }
+            
         }
 
         // Input validations 
@@ -118,17 +125,21 @@ namespace Final_Project_OOP.CoreClasses
 
         public void UpdateStatus(string status)
         {
-            if (status != "Pending" && status != "Assigned" && status != "Delivered")
-            {
-                throw new InvalidPackageException("[ERROR] - Invalid status; Please type 'Pending' / 'Assigned' / 'Delivered'");
-            }
+            VerifyStatus(status);
 
             SetStatus(status);
         }
 
-        public void UpdatePriorityLevel()
+        public void UpgradePriorityLevel()
         {
             priorityLevel++;
+        }
+
+        public void OverridePriorityLevel(int level)
+        {
+            VerifyPriorityLevel(level);
+
+            this.priorityLevel = level;
         }
 
         public double CalculatePriorityScore(Package package)

@@ -70,7 +70,47 @@ namespace Final_Project_OOP.CoreClasses
 
         private void ProcessDeliveries()
         {
+            foreach (Warehouse warehouse in warehouses)
+            {
+                Vehicle bestVehicle = null;
 
+                Worker worker = warehouse.AssignWorker();
+
+                if (worker == null)
+                {
+                    continue; // skip process, move to next warehouse
+                }
+
+                List<Package> bulkPackages = new List<Package>();
+                double currentLoad = 0;
+
+                foreach (Package package in deliverPackages)
+                {
+                      bestVehicle = warehouse.FindBestVehicle(package);
+
+                    double maxCapacity = bestVehicle.GetmaxCapacity();
+
+                    if (currentLoad + package.GetWeight() <= maxCapacity)
+                    {
+                        bulkPackages.Add(package);
+                        currentLoad += package.GetWeight();
+                        package.UpdateStatus("Delivered");
+                    }
+                }
+
+                if (bulkPackages.Count > 0 && bestVehicle != null)
+                {
+                    bestVehicle.Deliver(bulkPackages);
+                }
+
+                foreach (Package package in deliverPackages)
+                {
+                    if (package.GetStatus() != "Delivered")
+                    {
+                        remainingPackages.Enqueue(package);
+                    }
+                }
+            }
         }
 
         public void SimulateDay()
@@ -104,6 +144,8 @@ namespace Final_Project_OOP.CoreClasses
                 }
             }
 
+            ProcessDeliveries();
+
             while (!remainingPackages.IsEmpty())
             {
                 Package validatePackage = remainingPackages.Dequeue();
@@ -120,8 +162,6 @@ namespace Final_Project_OOP.CoreClasses
                     validatePackage.UpdateStatus("Assigned");
                 }
             }
-
-            ProcessDeliveries();
 
             Console.WriteLine($"Day has been simulated");
         }

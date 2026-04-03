@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Final_Project_OOP.Exceptions;
 
 namespace Final_Project_OOP
 {
@@ -19,7 +21,7 @@ namespace Final_Project_OOP
         {
             if (string.IsNullOrWhiteSpace(name)) 
             {
-                /*Mondongo*/
+                throw new InvalidDataException("invalid name");
             } 
             else { this.name = name; } 
         }

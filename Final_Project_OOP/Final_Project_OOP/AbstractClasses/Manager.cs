@@ -13,9 +13,19 @@ namespace Final_Project_OOP.AbstractClasses
         public void SetteamSize(int teamSize) { this.teamSize = teamSize; }
         public override void PerformTask()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Manager {Getname()} is assigning tasks to a team of {teamSize} workers.");
         }
         public Worker FindBestWorker(List<Worker> workers)
-        { throw new NotImplementedException(); }
+        {
+            Worker best = workers[0];
+            foreach (Worker worker in workers)
+            {
+                if (worker.CalculatePerformance() > best.CalculatePerformance())
+                {
+                    best = worker;
+                }
+            }
+            return best;
+        }
     }
 }

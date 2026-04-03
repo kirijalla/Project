@@ -13,7 +13,7 @@ namespace Final_Project_OOP.AbstractClasses
         public void SetlicenseType(string licenseType) { this.licenseType = licenseType; }
         public override void PerformTask()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Driver {Getname()} is driving deliveries with license type: {licenseType}");
         }
     }
 }

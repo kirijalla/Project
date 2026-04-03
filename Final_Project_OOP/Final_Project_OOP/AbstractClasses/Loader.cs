@@ -11,7 +11,7 @@ namespace Final_Project_OOP.AbstractClasses
         private double maxLiftWeight;
         public override void PerformTask()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Loader {Getname()}'s max lift is {maxLiftWeight} for loading/unloading packages.");
         }
     }
 }

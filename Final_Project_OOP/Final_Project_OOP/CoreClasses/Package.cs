@@ -16,7 +16,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             this.id = id;
         }
-        public int GetID()
+        public int GetId()
         {
             return id;
         }
@@ -50,7 +50,7 @@ namespace Final_Project_OOP.CoreClasses
         }
         public string GetStatus() { return status; }
 
-        public Package(int id, double weight, int priorityLevel, string destination, string status)
+        public Package(int id, double weight, int priorityLevel, string destination)
         {
             // Validate inputs
 
@@ -58,7 +58,6 @@ namespace Final_Project_OOP.CoreClasses
             VerifyWeight(weight);
             VerifyPriorityLevel(priorityLevel);
             VerifyDestination(destination);
-            VerifyStatus(status);
 
             // Create object
 
@@ -66,7 +65,15 @@ namespace Final_Project_OOP.CoreClasses
             SetWeight(weight);
             SetPriorityLevel(priorityLevel);
             SetDestination(destination);
-            SetStatus(status);
+            if (priorityLevel == 5)
+            {
+                this.status = "Assigned";
+            }
+            else
+            {
+                this.status = "Pending";
+            }
+            
         }
 
         // Input validations 
@@ -75,7 +82,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (id <= 0)
             {
-                throw new InvalidPackageException("Invalid ID; ID must be greater than 0.");
+                throw new InvalidPackageException("[ERROR] - Invalid ID; ID must be greater than 0.");
             }
         }
 
@@ -83,7 +90,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (weight <= 0)
             {
-                throw new InvalidPackageException("Invalid weight; weight must be greater than 0.");
+                throw new InvalidPackageException("[ERROR] - Invalid weight; weight must be greater than 0.");
             }
         }
 
@@ -91,7 +98,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (level < 1 || level > 5)
             {
-                throw new InvalidPackageException("Invalid level; must be between 1 and 5.");
+                throw new InvalidPackageException("[ERROR] - Invalid level; must be between 1 and 5.");
             }
         }
 
@@ -99,7 +106,7 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (string.IsNullOrWhiteSpace(destination))
             {
-                throw new InvalidPackageException("Invalid destination; empty input.");
+                throw new InvalidPackageException("[ERROR] - Invalid destination; empty input.");
             }
         }
 
@@ -107,23 +114,32 @@ namespace Final_Project_OOP.CoreClasses
         {
             if (string.IsNullOrWhiteSpace(status))
             {
-                throw new InvalidPackageException("Invalid status; empty status.");
+                throw new InvalidPackageException("[ERROR] - Invalid status; empty status.");
             }
 
             if (status != "Pending" && status != "Assigned" && status != "Delivered")
             {
-                throw new InvalidPackageException("Invalid status; status must be 'Pending', 'Assigned', or 'Delivered'.");
+                throw new InvalidPackageException("[ERROR] - Invalid status; status must be 'Pending', 'Assigned', or 'Delivered'.");
             }
         }
 
         public void UpdateStatus(string status)
         {
-            if (status != "Pending" && status != "Assigned" && status != "Delivered")
-            {
-                throw new InvalidPackageException("Invalid status...");
-            }
+            VerifyStatus(status);
 
             SetStatus(status);
+        }
+
+        public void UpgradePriorityLevel()
+        {
+            priorityLevel++;
+        }
+
+        public void OverridePriorityLevel(int level)
+        {
+            VerifyPriorityLevel(level);
+
+            this.priorityLevel = level;
         }
 
         public double CalculatePriorityScore(Package package)

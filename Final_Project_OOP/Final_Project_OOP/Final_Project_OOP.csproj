@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreClasses\DeliverySystem.cs" />
     <Compile Include="AbstractClasses\Driver.cs" />
     <Compile Include="AbstractClasses\Drone.cs" />
     <Compile Include="AbstractClasses\Loader.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="AbstractClasses\Van.cs" />
     <Compile Include="CoreClasses\Package.cs" />
     <Compile Include="CustomStack.cs" />
+    <Compile Include="CoreClasses\Warehouse.cs" />
     <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="AbstractClasses\Entity.cs" />
     <Compile Include="Exceptions\InvalidPackageException.cs" />

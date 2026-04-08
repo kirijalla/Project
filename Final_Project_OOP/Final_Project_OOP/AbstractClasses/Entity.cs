@@ -14,6 +14,13 @@ namespace Final_Project_OOP
         private string name;
         private DateTime createdDate;
 
+        public Entity(int id, string name, DateTime createdDate)
+        {
+            this.id = id;
+            this.name = name;
+            this.createdDate = createdDate;
+        }
+
         public int Getid() { return id; }
         public void Setid(int id) { this.id = id; }
         public string Getname() { return name; }

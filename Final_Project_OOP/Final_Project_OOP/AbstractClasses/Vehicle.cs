@@ -15,6 +15,14 @@ namespace Final_Project_OOP
         private double currentLoad;
         private bool isAvailable;
 
+        public Vehicle(int id, string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable) : base(id, name, createdDate)
+        {
+            this.speed = speed;
+            this.maxCapacity = maxCapacity;
+            this.currentLoad = currentLoad;
+            this.isAvailable = isAvailable;
+        }
+
         public double Getspeed() { return speed; }
         public void Setspeed(double speed) { this.speed = speed; }
         public double GetmaxCapacity() { return maxCapacity; }

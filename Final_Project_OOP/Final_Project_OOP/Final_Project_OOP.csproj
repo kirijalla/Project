@@ -45,17 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="CoreClasses\DeliverySystem.cs" />
-=======
     <Compile Include="AbstractClasses\Driver.cs" />
     <Compile Include="AbstractClasses\Drone.cs" />
     <Compile Include="AbstractClasses\Loader.cs" />
     <Compile Include="AbstractClasses\Manager.cs" />
     <Compile Include="AbstractClasses\Truck.cs" />
     <Compile Include="AbstractClasses\Van.cs" />
->>>>>>> d339f33f43901b11e61a75f894f6c89866962b32
     <Compile Include="CoreClasses\Package.cs" />
+    <Compile Include="CustomStack.cs" />
     <Compile Include="CoreClasses\Warehouse.cs" />
     <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="AbstractClasses\Entity.cs" />

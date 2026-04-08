@@ -12,6 +12,13 @@ namespace Final_Project_OOP
         private int tasksCompleted;
         private bool isAvailable;
 
+        public Worker(int id, string name,DateTime createdDate, int experienceYear, int tasksCompleted, bool isAvailable) : base(id, name, createdDate)
+        {
+            this.experienceYear = experienceYear;
+            this.tasksCompleted = tasksCompleted;
+            this.isAvailable = isAvailable;
+        }
+
         public int GetexperienceYear() { return experienceYear; }
         public void SetexperienceYear(int experienceYear) { this.experienceYear = experienceYear; }
         public int GetTasksCompleted() { return tasksCompleted; }

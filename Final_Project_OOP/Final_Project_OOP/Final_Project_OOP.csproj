@@ -52,6 +52,7 @@
     <Compile Include="AbstractClasses\Truck.cs" />
     <Compile Include="AbstractClasses\Van.cs" />
     <Compile Include="CoreClasses\Package.cs" />
+    <Compile Include="CustomStack.cs" />
     <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="AbstractClasses\Entity.cs" />
     <Compile Include="Exceptions\InvalidPackageException.cs" />

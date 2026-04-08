@@ -11,6 +11,11 @@ namespace Final_Project_OOP.AbstractClasses
     internal class Drone : Vehicle
     {
         private double maxDistance;
+
+        public Drone(int id, string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable, double maxDistance) : base(id, name, createdDate, speed, maxCapacity, currentLoad, isAvailable)
+        {
+            this.maxDistance = maxDistance;
+        }
         public double GetmaxDistance() { return maxDistance; }
         public void SetmaxDistance(double maxDistance) { this.maxDistance = maxDistance; }
 

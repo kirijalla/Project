@@ -58,8 +58,13 @@
     <Compile Include="DataStructures\CustomStack.cs" />
     <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="AbstractClasses\Entity.cs" />
+    <Compile Include="Exceptions\InvalidFileHandlingException.cs" />
     <Compile Include="Exceptions\InvalidPackageException.cs" />
     <Compile Include="Exceptions\OverCapacityException.cs" />
+    <Compile Include="FileHandling\PackageFileHandler.cs" />
+    <Compile Include="FileHandling\VehicleFileHandler.cs" />
+    <Compile Include="FileHandling\WarehouseFileHandler.cs" />
+    <Compile Include="FileHandling\WorkerFileHandler.cs" />
     <Compile Include="Interfaces\IFileHandler.cs" />
     <Compile Include="Interfaces\IQueueable.cs" />
     <Compile Include="Interfaces\ISortable.cs" />

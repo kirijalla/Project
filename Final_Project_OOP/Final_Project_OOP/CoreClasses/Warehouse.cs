@@ -1,12 +1,15 @@
 ﻿using Final_Project_OOP;
 using Final_Project_OOP.CoreClasses;
-using System.Collections.Generic;
 using Final_Project_OOP.Exceptions;
 using System;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 public class Warehouse
 {
     private string name;
+    private int id;
+    private static int currentId = 1;
     private List<Package> packages;
     private List<Vehicle> vehicles;
     private List<Worker> workers;
@@ -21,6 +24,13 @@ public class Warehouse
         this.packages = new List<Package>();
         this.vehicles = new List<Vehicle>();
         this.workers = new List<Worker>();
+        this.id = currentId;
+        currentId++;
+    }
+
+    public int GetId()
+    {
+        return id;
     }
 
     public void SetName(string name)
@@ -214,5 +224,14 @@ public class Warehouse
             }
         }
         return null;
+    }
+    public override string ToString()
+    {
+        return $"Warehouse name: {name} | ID: {id}";
+    }
+
+    public string ToFileString()
+    {
+        return $"{name},{id}";
     }
 }

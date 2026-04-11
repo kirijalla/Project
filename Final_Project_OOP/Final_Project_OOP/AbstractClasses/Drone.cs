@@ -25,7 +25,7 @@ namespace Final_Project_OOP.AbstractClasses
             {
                 if (package.GetWeight() < 10)
                 {
-                    Console.WriteLine($"Drone delivering light package: {package.GetID()}, Weight: {package.GetWeight()}kg");
+                    Console.WriteLine($"Drone delivering light package: {package.GetId()}, Weight: {package.GetWeight()}kg");
                     package.SetStatus("Delivered");
                 }
                 else { throw new InvalidPackageException("Invalid Weight for this vehicle"); }

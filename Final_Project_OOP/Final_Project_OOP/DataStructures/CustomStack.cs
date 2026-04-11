@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Final_Project_OOP
+namespace Final_Project_OOP.DataStructures
 {
-    internal class CustomStack<T>
+    public class CustomStack<T>
     {
         private T[] arr;
         private int top;
@@ -38,7 +38,7 @@ namespace Final_Project_OOP
             T value = arr[top];
             top--;
             return value;
-           
+
         }
 
         public T Peek()

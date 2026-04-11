@@ -18,6 +18,10 @@ namespace Final_Project_OOP
             this.tasksCompleted = tasksCompleted;
             this.isAvailable = isAvailable;
         }
+        public string ToFileString()
+        {
+            return $"{GetType().Name},{Getid()},{Getname()},{GetcreatedDate()},{experienceYear},{tasksCompleted},{isAvailable}";
+        }
 
         public int GetexperienceYear() { return experienceYear; }
         public void SetexperienceYear(int experienceYear) { this.experienceYear = experienceYear; }

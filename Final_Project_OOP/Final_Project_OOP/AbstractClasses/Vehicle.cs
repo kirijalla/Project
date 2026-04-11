@@ -22,6 +22,10 @@ namespace Final_Project_OOP
             this.currentLoad = currentLoad;
             this.isAvailable = isAvailable;
         }
+        public string ToFileString()
+        {
+            return $"{GetType().Name},{Getid()},{Getname()},{GetcreatedDate()},{speed},{maxCapacity},{currentLoad},{isAvailable}";
+        }
 
         public double Getspeed() { return speed; }
         public void Setspeed(double speed) { this.speed = speed; }

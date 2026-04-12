@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Final_Project_OOP.Exceptions;
 using Final_Project_OOP.DataStructures;
 using System.Threading.Tasks;
+using Final_Project_OOP.Interfaces;
 
 namespace Final_Project_OOP.CoreClasses
 {
-    public class DeliverySystem
+    public class DeliverySystem : ISortable
     {
 
         private List<Warehouse> warehouses;
@@ -166,7 +167,7 @@ namespace Final_Project_OOP.CoreClasses
             Console.WriteLine($"Day has been simulated");
         }
 
-        public void SortPackages()
+        public void Sort()
         {
             // Bubble Sort
 

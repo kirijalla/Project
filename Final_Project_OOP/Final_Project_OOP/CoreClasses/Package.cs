@@ -7,6 +7,7 @@ namespace Final_Project_OOP.CoreClasses
     {
 
         private int id;
+        private static int currentId = 1;
         private double weight;
         private int priorityLevel;
         private string destination;
@@ -50,18 +51,17 @@ namespace Final_Project_OOP.CoreClasses
         }
         public string GetStatus() { return status; }
 
-        public Package(int id, double weight, int priorityLevel, string destination)
+        public Package(double weight, int priorityLevel, string destination)
         {
             // Validate inputs
 
-            VerifyId(id);
             VerifyWeight(weight);
             VerifyPriorityLevel(priorityLevel);
             VerifyDestination(destination);
 
             // Create object
 
-            SetId(id);
+            id = currentId;
             SetWeight(weight);
             SetPriorityLevel(priorityLevel);
             SetDestination(destination);
@@ -73,6 +73,8 @@ namespace Final_Project_OOP.CoreClasses
             {
                 this.status = "Pending";
             }
+
+            currentId++;
             
         }
 
@@ -161,7 +163,12 @@ namespace Final_Project_OOP.CoreClasses
 
         public override string ToString()
         {
-            return $"ID: {id} - Weight: {weight} - Priority Level: {priorityLevel} - Destination: {destination} - Status: {status}";
+            return $"PACKAGE | ID: {id} | Weight: {weight} | Priority Level: {priorityLevel} | Destination: {destination} | Status: {status}";
+        }
+
+        public string ToFileString()
+        {
+            return $"{id},{weight},{priorityLevel},{destination},{status}";
         }
     }
 }

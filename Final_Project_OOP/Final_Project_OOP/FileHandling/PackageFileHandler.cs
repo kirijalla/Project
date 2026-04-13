@@ -46,7 +46,7 @@ namespace Final_Project_OOP.FileHandling
 
             while ((line = reader.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split('|');
 
                 // create Package object from parts
                 Package package = new Package(
@@ -57,7 +57,8 @@ namespace Final_Project_OOP.FileHandling
 
                 package.SetId(int.Parse(parts[0]));
                 package.SetStatus(parts[4]);
-                
+                package.SetWarehouseId(int.Parse(parts[5]));
+
                 packages.Add(package);
             }
 

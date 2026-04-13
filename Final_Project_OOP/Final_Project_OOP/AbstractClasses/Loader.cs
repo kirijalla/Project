@@ -9,13 +9,22 @@ namespace Final_Project_OOP.AbstractClasses
     internal class Loader : Worker
     {
         private double maxLiftWeight;
-        public Loader(int id, string name, DateTime createdDate, int experienceYear, int tasksCompleted, bool isAvailable, double maxLiftWeight) : base(id, name, createdDate, experienceYear, tasksCompleted, isAvailable)
+        public Loader(string name, DateTime createdDate, int experienceYear, int tasksCompleted, bool isAvailable, double maxLiftWeight) : base(name, createdDate, experienceYear, tasksCompleted, isAvailable)
         {
             this.maxLiftWeight = maxLiftWeight;
+        }
+        public Loader(Loader other) :base(other)
+        {
+            this.maxLiftWeight = other.maxLiftWeight;
         }
         public override void PerformTask()
         {
             Console.WriteLine($"Loader {Getname()}'s max lift is {maxLiftWeight} for loading/unloading packages.");
+        }
+
+        public override string ToFileString()
+        {
+            return base.ToFileString() + $",{maxLiftWeight}";
         }
     }
 }

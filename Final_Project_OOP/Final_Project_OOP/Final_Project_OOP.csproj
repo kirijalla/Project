@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AbstractClasses\Vehicle.cs" />
     <Compile Include="AbstractClasses\Worker.cs" />
+    <Compile Include="Snapshot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

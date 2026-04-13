@@ -1,9 +1,6 @@
 ﻿using Final_Project_OOP.CoreClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Final_Project_OOP.Exceptions;
 
 namespace Final_Project_OOP
@@ -15,16 +12,46 @@ namespace Final_Project_OOP
         private double currentLoad;
         private bool isAvailable;
 
-        public Vehicle(int id, string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable) : base(id, name, createdDate)
+        private int id;
+        private static int currentId = 1;
+
+        private int warehouseId;
+
+
+        public Vehicle(string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable) : base(name, createdDate)
         {
             this.speed = speed;
             this.maxCapacity = maxCapacity;
             this.currentLoad = currentLoad;
             this.isAvailable = isAvailable;
+            this.id = currentId;
+            currentId++;
         }
-        public string ToFileString()
+
+        protected Vehicle(Vehicle other) :base(other)
         {
-            return $"{GetType().Name},{Getid()},{Getname()},{GetcreatedDate()},{speed},{maxCapacity},{currentLoad},{isAvailable}";
+            this.speed = other.speed;
+            this.maxCapacity = other.maxCapacity;
+            this.currentLoad = other.currentLoad;
+            this.isAvailable = other.isAvailable;
+
+            warehouseId = other.warehouseId;
+
+        }
+
+        public virtual string ToFileString()
+        {
+            return $"{GetType().Name}|{Getid()}|{Getname()}|{GetcreatedDate()}|{speed}|{maxCapacity}|{currentLoad}|{isAvailable}|{warehouseId}";
+        }
+
+        public int GetWarehouseId()
+        {
+            return warehouseId;
+        }
+
+        public void SetWarehouseId(int warehouseId)
+        {
+            this.warehouseId = warehouseId;
         }
 
         public double Getspeed() { return speed; }

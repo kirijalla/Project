@@ -12,21 +12,41 @@ namespace Final_Project_OOP
         private int tasksCompleted;
         private bool isAvailable;
 
-        public Worker(int id, string name,DateTime createdDate, int experienceYear, int tasksCompleted, bool isAvailable) : base(id, name, createdDate)
+        private int id;
+        private static int currentId = 1;
+
+        private int warehouseId;
+
+        public Worker(string name,DateTime createdDate, int experienceYear, int tasksCompleted, bool isAvailable) : base(name, createdDate)
         {
             this.experienceYear = experienceYear;
             this.tasksCompleted = tasksCompleted;
             this.isAvailable = isAvailable;
+
+            this.id = currentId;
+            currentId++;
         }
         public Worker(Worker other) :base(other)
         {
             this.experienceYear = other.experienceYear;
             this.tasksCompleted = other.tasksCompleted;
             this.isAvailable = other.isAvailable;
+
+            warehouseId = other.warehouseId;
         }
-        public string ToFileString()
+        public virtual string ToFileString()
         {
-            return $"{GetType().Name},{Getid()},{Getname()},{GetcreatedDate()},{experienceYear},{tasksCompleted},{isAvailable}";
+            return $"{GetType().Name}|{Getid()}|{Getname()}|{GetcreatedDate()}|{experienceYear}|{tasksCompleted}|{isAvailable}|{warehouseId}";
+        }
+
+        public int GetWarehouseId()
+        {
+            return warehouseId;
+        }
+
+        public void SetWarehouseId(int warehouseId)
+        {
+            this.warehouseId = warehouseId;
         }
 
         public int GetexperienceYear() { return experienceYear; }

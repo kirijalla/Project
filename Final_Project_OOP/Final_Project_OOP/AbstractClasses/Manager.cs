@@ -9,7 +9,7 @@ namespace Final_Project_OOP.AbstractClasses
     internal class Manager : Worker
     {
         private int teamSize;
-        public Manager(int id, string name, DateTime createdDate, int experienceYear, int tasksCompleted, bool isAvailable, int teamSize) : base(id, name, createdDate,experienceYear,tasksCompleted,isAvailable)
+        public Manager(string name, DateTime createdDate, int experienceYear, int tasksCompleted, bool isAvailable, int teamSize) : base(name, createdDate,experienceYear,tasksCompleted,isAvailable)
         {
             this.teamSize = teamSize;
         }
@@ -34,6 +34,11 @@ namespace Final_Project_OOP.AbstractClasses
                 }
             }
             return best;
+        }
+
+        public override string ToFileString()
+        {
+            return base.ToFileString() + $",{teamSize}";
         }
     }
 }

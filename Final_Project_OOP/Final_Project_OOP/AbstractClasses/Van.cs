@@ -12,7 +12,7 @@ namespace Final_Project_OOP.AbstractClasses
     {
         private bool isElectric;
 
-        public Van(int id, string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable, bool isElectric) : base(id, name, createdDate, speed, maxCapacity, currentLoad, isAvailable)
+        public Van(string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable, bool isElectric) : base(name, createdDate, speed, maxCapacity, currentLoad, isAvailable)
         { 
             this.isElectric = isElectric;
         }
@@ -34,6 +34,11 @@ namespace Final_Project_OOP.AbstractClasses
                 }
                 else{ throw new InvalidPackageException("Invalid Weight for this vehicle"); }
             }
+        }
+
+        public override string ToFileString()
+        {
+            return base.ToFileString() + $",{isElectric}";
         }
 
     }

@@ -12,12 +12,20 @@ namespace Final_Project_OOP
         private double currentLoad;
         private bool isAvailable;
 
-        public Vehicle(int id, string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable) : base(id, name, createdDate)
+        private int id;
+        private static int currentId = 1;
+
+        private int warehouseId;
+
+
+        public Vehicle(string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable) : base(name, createdDate)
         {
             this.speed = speed;
             this.maxCapacity = maxCapacity;
             this.currentLoad = currentLoad;
             this.isAvailable = isAvailable;
+            this.id = currentId;
+            currentId++;
         }
 
         protected Vehicle(Vehicle other) :base(other)
@@ -26,11 +34,24 @@ namespace Final_Project_OOP
             this.maxCapacity = other.maxCapacity;
             this.currentLoad = other.currentLoad;
             this.isAvailable = other.isAvailable;
+
+            warehouseId = other.warehouseId;
+
         }
 
-        public string ToFileString()
+        public virtual string ToFileString()
         {
-            return $"{GetType().Name},{Getid()},{Getname()},{GetcreatedDate()},{speed},{maxCapacity},{currentLoad},{isAvailable}";
+            return $"{GetType().Name}|{Getid()}|{Getname()}|{GetcreatedDate()}|{speed}|{maxCapacity}|{currentLoad}|{isAvailable}|{warehouseId}";
+        }
+
+        public int GetWarehouseId()
+        {
+            return warehouseId;
+        }
+
+        public void SetWarehouseId(int warehouseId)
+        {
+            this.warehouseId = warehouseId;
         }
 
         public double Getspeed() { return speed; }

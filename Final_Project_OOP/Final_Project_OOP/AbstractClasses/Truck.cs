@@ -12,7 +12,7 @@ namespace Final_Project_OOP.AbstractClasses
     {
         private double fuelConsumption;
 
-        public Truck(int id, string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable, double fuelConsumption) : base(id, name, createdDate, speed, maxCapacity, currentLoad, isAvailable)
+        public Truck(string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable, double fuelConsumption) : base(name, createdDate, speed, maxCapacity, currentLoad, isAvailable)
         {
             this.fuelConsumption = fuelConsumption;
         }
@@ -38,6 +38,11 @@ namespace Final_Project_OOP.AbstractClasses
         public override double CalculateEfficiency() 
         {
             return base.CalculateEfficiency() - fuelConsumption * 0.1;
+        }
+
+        public override string ToFileString()
+        {
+            return base.ToFileString() + $",{fuelConsumption}";
         }
 
     }

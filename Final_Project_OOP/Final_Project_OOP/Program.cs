@@ -30,7 +30,7 @@ namespace Final_Project_OOP
 
             DeliverySystem deliverySystem = new DeliverySystem();
 
-            string[] Menu = { "1 Add entities\n2 Assign deliveries\n3 Sort\n4 Search\n5 Run simulation\n6 Undo\n7 Save / Load\n8 Exit" };
+            string[] Menu = { "1 Add entities", "2 Assign deliveries", "3 Sort", "4 Search", "5 Run simulation", "6 Undo", "7 Save / Load", "8 Exit"};
             int choice;
             do
             {
@@ -50,7 +50,7 @@ namespace Final_Project_OOP
                             try
                             {
                                 packages.Add(new Package (20, 5, "China"));
-                                packages.Add(new Package(10, 9, "Montreal"));
+                                packages.Add(new Package(10, 5, "Montreal"));
                                 packages.Add(new Package(14, 4, "Boston"));
                                 packages.Add(new Package(19, 4, "France"));
                             }
@@ -61,7 +61,6 @@ namespace Final_Project_OOP
                             Console.WriteLine("Created Packages. Creating Warehouses.");
 
                              warehouses.Add(new Warehouse("Warehouse1"));
-                            warehouses.Add(new Warehouse("Warehouse2"));
 
                             Console.WriteLine("Created Warehouses.");
 
@@ -78,6 +77,42 @@ namespace Final_Project_OOP
                             }
 
                             Console.WriteLine("Delivery System Set up.");
+
+                            Console.WriteLine("Creating vehicles.");
+
+                            vehicles.Add(new Truck("Ford", DateTime.Now, 30, 100, 0, true, 20));
+                            vehicles.Add(new Van("GMC", DateTime.Now, 25, 150, 0, true, true));
+                            vehicles.Add(new Drone("ESP", DateTime.Now, 20, 15, 0, true, 300));
+
+                            Console.WriteLine("Created Vehicles");
+                            Console.WriteLine("Creating workers.");
+
+                            workers.Add(new Loader("Andres", DateTime.Now, 5, 0, true, 200));
+                            workers.Add(new Manager("Pargol", DateTime.Now, 23, 14, true, 3));
+                            workers.Add(new Driver("Dario", DateTime.Now, 2, 1, true, "Expired"));
+
+                            Console.WriteLine("Created workers.");
+
+                            Console.WriteLine("Assigning workers, vehicles, and packages to warehouse1.");
+
+                            for (int i = 0; i < packages.Count; i++)
+                            {
+                                warehouses[0].GetListPackages().Add(packages[i]);
+                                packages[i].SetWarehouseId(warehouses[0].GetId());
+                            }
+
+                            for (int i = 0; i < vehicles.Count; i++)
+                            {
+                                warehouses[0].GetListVehicles().Add(vehicles[i]);
+                                vehicles[i].SetWarehouseId(warehouses[0].GetId());
+                            }
+
+                            for (int i = 0; i < workers.Count; i++)
+                            {
+                                warehouses[0].GetListWorkers().Add(workers[i]);
+                                workers[i].SetWarehouseId(warehouses[0].GetId());
+                            }
+
                         }
                         break;
                     case 2:
@@ -134,6 +169,9 @@ namespace Final_Project_OOP
                                     workerHandler.Load(workerFile);
                                     warehouseHandler.Load(warehouseFile);
                                     vehicleHandler.Load(vehicleFile);
+
+                                    deliverySystem.RebuildWarehouseRelationships(warehouses, packages, vehicles, workers);
+                                    deliverySystem.SetWarehouses(warehouses);
                                 }
                                 catch (Exception ex)
                                 {

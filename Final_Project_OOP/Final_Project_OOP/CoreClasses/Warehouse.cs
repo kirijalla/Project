@@ -29,19 +29,27 @@ public class Warehouse
         currentId++;
     }
 
+    public Warehouse(string name, int id)
+    {
+        this.name = name;
+        this.id = id;
+
+        this.packages = new List<Package>();
+        this.vehicles = new List<Vehicle>();
+        this.workers = new List<Worker>();
+    }
+
     public Warehouse(Warehouse other)
     {
         this.name = other.name;
         this.id = other.id;
 
-        // Deep copy packages
         this.packages = new List<Package>();
         foreach (var p in other.packages)
         {
-            this.packages.Add(new Package(p)); // copy constructor
+            this.packages.Add(new Package(p)); 
         }
 
-        // Deep copy vehicles
         this.vehicles = new List<Vehicle>();
         foreach (var v in other.vehicles)
         {
@@ -53,7 +61,6 @@ public class Warehouse
                 this.vehicles.Add(new Drone(drone));
         }
 
-        // Deep copy workers
         this.workers = new List<Worker>();
         foreach (var w in other.workers)
         {
@@ -66,6 +73,10 @@ public class Warehouse
         }
     }
 
+    public void SetId(int id)
+    {
+        this.id = id;
+    }
 
     public int GetId()
     {
@@ -83,51 +94,16 @@ public class Warehouse
 
     public List<Package> GetListPackages()
     {
-        List<Package> packages = new List<Package>();
-
-        foreach (Package package in this.packages)
-        {
-            packages.Add(package);
-        }
-
-        if (packages.Count < 1)
-        {
-            return null;
-        }
         return packages;
     }
 
     public List<Vehicle> GetListVehicles()
     {
-        List<Vehicle> vehicles = new List<Vehicle>();
-
-        foreach (Vehicle vehicle in this.vehicles)
-        {
-            vehicles.Add(vehicle);
-        }
-
-        if (vehicles.Count < 1)
-        {
-            return null;
-        }
-
         return vehicles;
     }
 
     public List<Worker> GetListWorkers()
-    {
-        List<Worker> workers = new List<Worker>();
-
-        foreach (Worker worker in this.workers)
-        {
-            workers.Add(worker);
-        }
-
-        if (workers.Count < 1)
-        {
-            return null;
-        }
-
+    { 
         return workers;
     }
 
@@ -271,6 +247,6 @@ public class Warehouse
 
     public string ToFileString()
     {
-        return $"{name},{id}";
+        return $"{name}|{id}";
     }
 }

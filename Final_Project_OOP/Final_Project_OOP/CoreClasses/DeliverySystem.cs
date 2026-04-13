@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Final_Project_OOP.DataStructures;
 using Final_Project_OOP.Exceptions;
-using Final_Project_OOP.DataStructures;
+using Final_Project_OOP.FileHandling;
 using Final_Project_OOP.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace Final_Project_OOP.CoreClasses
 {
@@ -170,16 +171,15 @@ namespace Final_Project_OOP.CoreClasses
 
         public void SimulateDay()
         {
+            Console.Clear();
+            Console.WriteLine("Simulating Day.");
             SaveState();
 
             allPackages.Clear();
             deliverPackages.Clear();
             remainingPackages.Clear();
 
-            if (deliverPackages.Count == 0)
-            {
                 AssignDeliveries();
-            }
 
             ProcessDeliveries();
 
@@ -283,6 +283,68 @@ namespace Final_Project_OOP.CoreClasses
             }
 
             Console.WriteLine("Previous state restored.");
+        }
+
+        public void SetWarehouses(List<Warehouse> warehouses)
+        {
+            this.warehouses = warehouses;
+
+            allPackages.Clear();
+
+            foreach (Warehouse warehouse in warehouses)
+            {
+                foreach (Package package in warehouse.GetListPackages())
+                {
+                    allPackages.Add(package);
+                }
+            }
+        }
+
+
+        public void RebuildWarehouseRelationships(List<Warehouse> warehouses, List<Package> packages, List<Vehicle> vehicles, List<Worker> workers)
+        {
+            foreach (Warehouse warehouse in warehouses)
+            {
+                warehouse.GetListPackages().Clear();
+                warehouse.GetListVehicles().Clear();
+                warehouse.GetListWorkers().Clear();
+            }
+
+            foreach (Package package in packages)
+            {
+                foreach (Warehouse warehouse in warehouses)
+                {
+                    if (package.GetWarehouseId() == warehouse.GetId())
+                    {
+                        warehouse.GetListPackages().Add(package);
+                        break;
+                    }
+                }
+            }
+
+            foreach (Vehicle vehicle in vehicles)
+            {
+                foreach (Warehouse warehouse in warehouses)
+                {
+                    if (vehicle.GetWarehouseId() == warehouse.GetId())
+                    {
+                        warehouse.GetListVehicles().Add(vehicle);
+                        break;
+                    }
+                }
+            }
+
+            foreach (Worker worker in workers)
+            {
+                foreach (Warehouse warehouse in warehouses)
+                {
+                    if (worker.GetWarehouseId() == warehouse.GetId())
+                    {
+                        warehouse.GetListWorkers().Add(worker);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

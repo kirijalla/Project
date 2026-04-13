@@ -13,6 +13,18 @@ namespace Final_Project_OOP.CoreClasses
         private string destination;
         private string status;
 
+        private int warehouseId;
+
+        public int GetWarehouseId()
+        {
+            return warehouseId;
+        }
+
+        public void SetWarehouseId(int warehouseId)
+        {
+            this.warehouseId = warehouseId;
+        }
+
         public void SetId(int id)
         {
             this.id = id;
@@ -85,6 +97,8 @@ namespace Final_Project_OOP.CoreClasses
             priorityLevel = other.priorityLevel;
             destination = other.destination;
             status = other.status;
+
+            warehouseId = other.warehouseId;
         }
 
         // Input validations 
@@ -177,7 +191,7 @@ namespace Final_Project_OOP.CoreClasses
 
         public string ToFileString()
         {
-            return $"{id},{weight},{priorityLevel},{destination},{status}";
+            return $"{id}|{weight}|{priorityLevel}|{destination}|{status}|{warehouseId}";
         }
     }
 }

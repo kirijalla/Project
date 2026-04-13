@@ -13,6 +13,10 @@ namespace Final_Project_OOP.AbstractClasses
         {
             this.teamSize = teamSize;
         }
+        public Manager(Manager other) :base(other)
+        {
+            this.teamSize = other.teamSize;
+        }
         public int GetteamSize() { return teamSize; }
         public void SetteamSize(int teamSize) { this.teamSize = teamSize; }
         public override void PerformTask()

@@ -78,6 +78,15 @@ namespace Final_Project_OOP.CoreClasses
             
         }
 
+        public Package(Package other)
+        {
+            id = other.id;
+            weight = other.weight;
+            priorityLevel = other.priorityLevel;
+            destination = other.destination;
+            status = other.status;
+        }
+
         // Input validations 
 
         private void VerifyId(int id)

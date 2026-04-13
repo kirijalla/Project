@@ -1,4 +1,5 @@
 ﻿using Final_Project_OOP;
+using Final_Project_OOP.AbstractClasses;
 using Final_Project_OOP.CoreClasses;
 using Final_Project_OOP.Exceptions;
 using System;
@@ -27,6 +28,44 @@ public class Warehouse
         this.id = currentId;
         currentId++;
     }
+
+    public Warehouse(Warehouse other)
+    {
+        this.name = other.name;
+        this.id = other.id;
+
+        // Deep copy packages
+        this.packages = new List<Package>();
+        foreach (var p in other.packages)
+        {
+            this.packages.Add(new Package(p)); // copy constructor
+        }
+
+        // Deep copy vehicles
+        this.vehicles = new List<Vehicle>();
+        foreach (var v in other.vehicles)
+        {
+            if (v is Truck truck)
+                this.vehicles.Add(new Truck(truck));
+            else if (v is Van van)
+                this.vehicles.Add(new Van(van));
+            else if (v is Drone drone)
+                this.vehicles.Add(new Drone(drone));
+        }
+
+        // Deep copy workers
+        this.workers = new List<Worker>();
+        foreach (var w in other.workers)
+        {
+            if (w is Driver driver)
+                this.workers.Add(new Driver(driver));
+            else if (w is Manager manager)
+                this.workers.Add(new Manager(manager));
+            else if (w is Loader loader)
+                this.workers.Add(new Loader(loader));
+        }
+    }
+
 
     public int GetId()
     {

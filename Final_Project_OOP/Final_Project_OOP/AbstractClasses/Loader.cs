@@ -13,6 +13,10 @@ namespace Final_Project_OOP.AbstractClasses
         {
             this.maxLiftWeight = maxLiftWeight;
         }
+        public Loader(Loader other) :base(other)
+        {
+            this.maxLiftWeight = other.maxLiftWeight;
+        }
         public override void PerformTask()
         {
             Console.WriteLine($"Loader {Getname()}'s max lift is {maxLiftWeight} for loading/unloading packages.");

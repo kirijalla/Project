@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Final_Project_OOP.Exceptions;
 using Final_Project_OOP.DataStructures;
-using System.Threading.Tasks;
 using Final_Project_OOP.Interfaces;
 
 namespace Final_Project_OOP.CoreClasses
@@ -16,6 +15,8 @@ namespace Final_Project_OOP.CoreClasses
         private List<Package> deliverPackages = new List<Package>();
         private CustomQueue<Package> remainingPackages = new CustomQueue<Package>();
 
+        private CustomStack<Snapshot> undoStack = new CustomStack<Snapshot>(10);
+
 
         public DeliverySystem()
         {
@@ -26,16 +27,18 @@ namespace Final_Project_OOP.CoreClasses
 
         public List<Package> GetPackages()
         {
-            List<Package> allPackages = new List<Package>();
+            List<Package> copy = new List<Package>();
+
             foreach (Package package in allPackages)
             {
-                allPackages.Add(package);
+                copy.Add(package);
             }
-            return allPackages;
-        }
 
+            return copy;
+        }
         public void AddWarehouse(Warehouse w)
         {
+            SaveState();
             for (int i = 0; i < warehouses.Count; i++)
             {
                 if (warehouses[i].GetName() == w.GetName())
@@ -47,6 +50,7 @@ namespace Final_Project_OOP.CoreClasses
         }
         public void AddPackage(Package p)
         {
+            SaveState();
             for (int i = 0; i < allPackages.Count; i++)
             {
                 if (allPackages[i].GetId() == p.GetId())
@@ -69,57 +73,8 @@ namespace Final_Project_OOP.CoreClasses
             return null;
         }
 
-        private void ProcessDeliveries()
+        public void AssignDeliveries()
         {
-            foreach (Warehouse warehouse in warehouses)
-            {
-                Vehicle bestVehicle = null;
-
-                Worker worker = warehouse.AssignWorker();
-
-                if (worker == null)
-                {
-                    continue; // skip process, move to next warehouse
-                }
-
-                List<Package> bulkPackages = new List<Package>();
-                double currentLoad = 0;
-
-                foreach (Package package in deliverPackages)
-                {
-                      bestVehicle = warehouse.FindBestVehicle(package);
-
-                    double maxCapacity = bestVehicle.GetmaxCapacity();
-
-                    if (currentLoad + package.GetWeight() <= maxCapacity)
-                    {
-                        bulkPackages.Add(package);
-                        currentLoad += package.GetWeight();
-                        package.UpdateStatus("Delivered");
-                    }
-                }
-
-                if (bulkPackages.Count > 0 && bestVehicle != null)
-                {
-                    bestVehicle.Deliver(bulkPackages);
-                }
-
-                foreach (Package package in deliverPackages)
-                {
-                    if (package.GetStatus() != "Delivered")
-                    {
-                        remainingPackages.Enqueue(package);
-                    }
-                }
-            }
-        }
-
-        public void SimulateDay()
-        {
-            allPackages.Clear();
-            deliverPackages.Clear();
-            remainingPackages.Clear();
-
             foreach (Warehouse warehouse in warehouses)
             {
                 List<Package> packages = warehouse.GetListPackages();
@@ -144,31 +99,113 @@ namespace Final_Project_OOP.CoreClasses
                     remainingPackages.Enqueue(package);
                 }
             }
+        }
+
+        private void ProcessDeliveries()
+        {
+            foreach (Warehouse warehouse in warehouses)
+            {
+                Worker worker = warehouse.AssignWorker();
+
+                if (worker == null)
+                {
+                    continue;
+                }
+
+                List<Package> warehousePackages = warehouse.GetListPackages();
+                List<Package> bulkPackages = new List<Package>();
+                Vehicle bestVehicle = null;
+                double currentLoad = 0;
+
+                foreach (Package package in deliverPackages)
+                {
+                    if (!warehousePackages.Contains(package))
+                    {
+                        continue;
+                    }
+
+                    if (package.GetStatus() == "Delivered")
+                    {
+                        continue;
+                    }
+
+                    if (bestVehicle == null)
+                    {
+                        bestVehicle = warehouse.FindBestVehicle(package);
+
+                        if (bestVehicle == null)
+                        {
+                            continue;
+                        }
+                    }
+
+                    double maxCapacity = bestVehicle.GetmaxCapacity();
+
+                    if (currentLoad + package.GetWeight() <= maxCapacity)
+                    {
+                        bulkPackages.Add(package);
+                        currentLoad += package.GetWeight();
+                    }
+                }
+
+                if (bulkPackages.Count > 0 && bestVehicle != null)
+                {
+                    bestVehicle.Deliver(bulkPackages);
+
+                    foreach (Package package in bulkPackages)
+                    {
+                        package.UpdateStatus("Delivered");
+                    }
+                }
+            }
+
+            foreach (Package package in deliverPackages)
+            {
+                if (package.GetStatus() != "Delivered")
+                {
+                    remainingPackages.Enqueue(package);
+                }
+            }
+        }
+
+        public void SimulateDay()
+        {
+            SaveState();
+
+            allPackages.Clear();
+            deliverPackages.Clear();
+            remainingPackages.Clear();
+
+            if (deliverPackages.Count == 0)
+            {
+                AssignDeliveries();
+            }
 
             ProcessDeliveries();
 
             while (!remainingPackages.IsEmpty())
             {
-                Package validatePackage = remainingPackages.Dequeue();
+                Package package = remainingPackages.Dequeue();
 
-                validatePackage.UpgradePriorityLevel();
-                
-                if (validatePackage.GetPriorityLevel() == 5)
+                package.UpgradePriorityLevel();
+
+                if (package.GetPriorityLevel() == 5)
                 {
-                    validatePackage.UpdateStatus("Assigned");
+                    package.UpdateStatus("Assigned");
                 }
-                if (validatePackage.CalculatePriorityScore(validatePackage) > 20 && validatePackage.GetPriorityLevel() != 5)
+                else if (package.CalculatePriorityScore(package) > 20)
                 {
-                    validatePackage.OverridePriorityLevel(5);
-                    validatePackage.UpdateStatus("Assigned");
+                    package.OverridePriorityLevel(5);
+                    package.UpdateStatus("Assigned");
                 }
             }
 
-            Console.WriteLine($"Day has been simulated");
+            Console.WriteLine("Day has been simulated");
         }
 
         public void Sort()
         {
+            SaveState();
             // Bubble Sort
 
             for (int i = 0; i < allPackages.Count; i++)
@@ -207,6 +244,45 @@ namespace Final_Project_OOP.CoreClasses
                 allPackages[i] = temp;
             }
             */
+        }
+
+        private void SaveState()
+        {
+            Snapshot snapshot = new Snapshot(warehouses, allPackages);
+            undoStack.Push(snapshot);
+        }
+
+        public void Undo()
+        {
+            if (undoStack.IsEmpty())
+            {
+                Console.WriteLine("No actions to undo.");
+                return;
+            }
+
+            Snapshot previousState = undoStack.Pop();
+
+            warehouses.Clear();
+            allPackages.Clear();
+            deliverPackages.Clear();
+            remainingPackages.Clear();
+
+            foreach (Warehouse warehouse in previousState.GetWarehouses())
+            {
+                warehouses.Add(new Warehouse(warehouse));
+            }
+
+            foreach (Warehouse warehouse in warehouses)
+            {
+                List<Package> packages = warehouse.GetListPackages();
+
+                foreach (Package package in packages)
+                {
+                    allPackages.Add(package);
+                }
+            }
+
+            Console.WriteLine("Previous state restored.");
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Final_Project_OOP
             List<Vehicle> vehicles = new List<Vehicle>();
             VehicleFileHandler vehicleHandler = new VehicleFileHandler(vehicles);
 
-            DeliverySystem deliverSystem = new DeliverySystem();
+            DeliverySystem deliverySystem = new DeliverySystem();
 
             string[] Menu = { "1 Add entities\n2 Assign deliveries\n3 Sort\n4 Search\n5 Run simulation\n6 Undo\n7 Save / Load\n8 Exit" };
             int choice;
@@ -45,6 +45,7 @@ namespace Final_Project_OOP
                 {
                     case 1:
                         {
+                          
                             Console.WriteLine("Creating entities for Packages");
                             try
                             {
@@ -68,12 +69,12 @@ namespace Final_Project_OOP
 
                             for (int i = 0; i < packages.Count; i++)
                             {
-                                deliverSystem.AddPackage(packages[i]);
+                                deliverySystem.AddPackage(packages[i]);
                             }
 
                             for (int i = 0; i < warehouses.Count; i++)
                             {
-                                deliverSystem.AddWarehouse(warehouses[i]);
+                                deliverySystem.AddWarehouse(warehouses[i]);
                             }
 
                             Console.WriteLine("Delivery System Set up.");
@@ -81,11 +82,11 @@ namespace Final_Project_OOP
                         break;
                     case 2:
                         {
-
+                            deliverySystem.AssignDeliveries();
                         }
                         break;
                     case 3:
-                        deliverSystem.Sort();
+                        deliverySystem.Sort();
                         Console.WriteLine("Sorted Packages.");
                         break;
                     case 4:
@@ -93,7 +94,7 @@ namespace Final_Project_OOP
                             Console.WriteLine("Enter ID of your package");
                             int userId = Convert.ToInt32(Console.ReadLine());
 
-                            Package foundPackage = deliverSystem.SearchPackageById(userId);
+                            Package foundPackage = deliverySystem.SearchPackageById(userId);
 
                             if (foundPackage == null)
                             {
@@ -107,9 +108,18 @@ namespace Final_Project_OOP
 
                         break;
                     case 5:
-                        deliverSystem.SimulateDay();
+                        deliverySystem.SimulateDay();
                         break;
                     case 6:
+                        try
+                        {
+                            deliverySystem.Undo();
+                            Console.WriteLine("Undo successful.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                         break;
                     case 7:
                         {

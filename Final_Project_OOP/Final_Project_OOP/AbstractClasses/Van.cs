@@ -16,6 +16,11 @@ namespace Final_Project_OOP.AbstractClasses
         { 
             this.isElectric = isElectric;
         }
+
+        public Van(Van other) :base(other)
+        {
+            this.isElectric = other.isElectric;
+        }
         public bool GetisElectric() { return isElectric; }
         public void SetisElectric(bool isElectric) { this.isElectric = isElectric; }
         public override void Deliver(List<Package> packages)

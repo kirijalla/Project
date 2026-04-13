@@ -48,14 +48,14 @@ namespace Final_Project_OOP.FileHandling
                 if (type == "Drone")
                 {
                     Vehicle drone = new Drone(
-                        int.Parse(parts[0]),
-                        parts[1],
-                        DateTime.Parse(parts[2]),
-                        double.Parse(parts[3]),
+                        int.Parse(parts[1]),
+                        parts[2],
+                        DateTime.Parse(parts[3]),
                         double.Parse(parts[4]),
                         double.Parse(parts[5]),
-                        bool.Parse(parts[6]),
-                        double.Parse(parts[7])
+                        double.Parse(parts[6]),
+                        bool.Parse(parts[7]),
+                        double.Parse(parts[8])
                         );
 
                     vehicles.Add(drone);

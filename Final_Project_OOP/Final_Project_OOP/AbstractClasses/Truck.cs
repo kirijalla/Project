@@ -16,6 +16,11 @@ namespace Final_Project_OOP.AbstractClasses
         {
             this.fuelConsumption = fuelConsumption;
         }
+
+        public Truck(Truck other) : base(other)
+        {
+            this.fuelConsumption = other.fuelConsumption;
+        }
         public double GetfuelConsumption() { return fuelConsumption; }
         public void SetfuelConsumption(double fuelConsumption) { this.fuelConsumption = fuelConsumption; }
         public override void Deliver(List<Package> packages)

@@ -18,6 +18,12 @@ namespace Final_Project_OOP
             this.tasksCompleted = tasksCompleted;
             this.isAvailable = isAvailable;
         }
+        public Worker(Worker other) :base(other)
+        {
+            this.experienceYear = other.experienceYear;
+            this.tasksCompleted = other.tasksCompleted;
+            this.isAvailable = other.isAvailable;
+        }
         public string ToFileString()
         {
             return $"{GetType().Name},{Getid()},{Getname()},{GetcreatedDate()},{experienceYear},{tasksCompleted},{isAvailable}";

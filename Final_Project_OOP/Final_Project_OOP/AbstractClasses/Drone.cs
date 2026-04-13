@@ -16,6 +16,11 @@ namespace Final_Project_OOP.AbstractClasses
         {
             this.maxDistance = maxDistance;
         }
+
+        public Drone(Drone other) :base(other)
+        {
+            this.maxDistance = other.maxDistance;
+        }
         public double GetmaxDistance() { return maxDistance; }
         public void SetmaxDistance(double maxDistance) { this.maxDistance = maxDistance; }
 

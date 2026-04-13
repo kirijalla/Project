@@ -13,6 +13,11 @@ namespace Final_Project_OOP.AbstractClasses
         {
             this.licenseType = licenseType;
         }
+
+        public Driver(Driver other) :base(other)
+        {
+            this.licenseType = other.licenseType;
+        }
         public string GetlicenseType() { return licenseType; }
         public void SetlicenseType(string licenseType) { this.licenseType = licenseType; }
         public override void PerformTask()

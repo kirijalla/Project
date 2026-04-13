@@ -21,6 +21,13 @@ namespace Final_Project_OOP
             this.createdDate = createdDate;
         }
 
+        protected Entity(Entity other)
+        {
+            this.id = other.id;
+            this.name = other.name;
+            this.createdDate = other.createdDate;
+        }
+
         public int Getid() { return id; }
         public void Setid(int id) { this.id = id; }
         public string Getname() { return name; }

@@ -1,9 +1,6 @@
 ﻿using Final_Project_OOP.CoreClasses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Final_Project_OOP.Exceptions;
 
 namespace Final_Project_OOP
@@ -22,6 +19,15 @@ namespace Final_Project_OOP
             this.currentLoad = currentLoad;
             this.isAvailable = isAvailable;
         }
+
+        protected Vehicle(Vehicle other) :base(other)
+        {
+            this.speed = other.speed;
+            this.maxCapacity = other.maxCapacity;
+            this.currentLoad = other.currentLoad;
+            this.isAvailable = other.isAvailable;
+        }
+
         public string ToFileString()
         {
             return $"{GetType().Name},{Getid()},{Getname()},{GetcreatedDate()},{speed},{maxCapacity},{currentLoad},{isAvailable}";

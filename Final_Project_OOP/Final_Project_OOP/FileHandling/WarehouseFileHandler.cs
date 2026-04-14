@@ -18,7 +18,7 @@ namespace Final_Project_OOP.FileHandling
 
         public void Save(string path)
         {
-            StreamWriter writer = new StreamWriter(path);
+            StreamWriter writer = new StreamWriter(path, true);
 
             foreach (Warehouse warehouse in warehouses)
             {

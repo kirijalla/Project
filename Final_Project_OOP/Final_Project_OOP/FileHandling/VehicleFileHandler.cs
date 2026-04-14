@@ -4,6 +4,7 @@ using Final_Project_OOP.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 
 
 namespace Final_Project_OOP.FileHandling
@@ -41,52 +42,57 @@ namespace Final_Project_OOP.FileHandling
 
             while ((line = reader.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                vehicles.Clear();
+                string[] parts = line.Split('|');
 
                 string type = parts[0];
 
                 if (type == "Drone")
                 {
                     Vehicle drone = new Drone(
-                        int.Parse(parts[0]),
-                        parts[1],
-                        DateTime.Parse(parts[2]),
-                        double.Parse(parts[3]),
+                        parts[2],
+                        DateTime.Parse(parts[3]),
                         double.Parse(parts[4]),
                         double.Parse(parts[5]),
-                        bool.Parse(parts[6]),
-                        double.Parse(parts[7])
-                        );
+                        double.Parse(parts[6]),
+                        bool.Parse(parts[7]),
+                        double.Parse(parts[9])
+                    );
 
+                    drone.Setid(int.Parse(parts[1]));
+                    drone.SetWarehouseId(int.Parse(parts[8]));
                     vehicles.Add(drone);
                 }
                 else if (type == "Truck")
                 {
                     Vehicle truck = new Truck(
-                        int.Parse(parts[0]),
-                        parts[1],
-                        DateTime.Parse(parts[2]),
-                        double.Parse(parts[3]),
+                        parts[2],
+                        DateTime.Parse(parts[3]),
                         double.Parse(parts[4]),
                         double.Parse(parts[5]),
-                        bool.Parse(parts[6]),
-                        double.Parse(parts[7])
-                        );
+                        double.Parse(parts[6]),
+                        bool.Parse(parts[7]),
+                        double.Parse(parts[9])
+                    );
+
+                    truck.Setid(int.Parse(parts[1]));
+                    truck.SetWarehouseId(int.Parse(parts[8]));
                     vehicles.Add(truck);
                 }
                 else if (type == "Van")
                 {
                     Vehicle van = new Van(
-                        int.Parse(parts[0]),
-                        parts[1],
-                        DateTime.Parse(parts[2]),
-                        double.Parse(parts[3]),
+                        parts[2],
+                        DateTime.Parse(parts[3]),
                         double.Parse(parts[4]),
                         double.Parse(parts[5]),
-                        bool.Parse(parts[6]),
-                        bool.Parse(parts[7])
+                        double.Parse(parts[6]),
+                        bool.Parse(parts[7]),
+                        bool.Parse(parts[9])
+                    );
 
-    );
+                    van.Setid(int.Parse(parts[1]));
+                    van.SetWarehouseId(int.Parse(parts[8]));
                     vehicles.Add(van);
                 }
             }

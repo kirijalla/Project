@@ -21,7 +21,7 @@ namespace Final_Project_OOP.DataStructures
         {
             if (top == capacity - 1)
             {
-                Console.WriteLine("Stack os full");
+                Console.WriteLine("Stack is full");
                 return;
             }
             top++;

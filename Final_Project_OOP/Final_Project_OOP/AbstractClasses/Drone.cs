@@ -12,9 +12,14 @@ namespace Final_Project_OOP.AbstractClasses
     {
         private double maxDistance;
 
-        public Drone(int id, string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable, double maxDistance) : base(id, name, createdDate, speed, maxCapacity, currentLoad, isAvailable)
+        public Drone(string name, DateTime createdDate, double speed, double maxCapacity, double currentLoad, bool isAvailable, double maxDistance) : base(name, createdDate, speed, maxCapacity, currentLoad, isAvailable)
         {
             this.maxDistance = maxDistance;
+        }
+
+        public Drone(Drone other) :base(other)
+        {
+            this.maxDistance = other.maxDistance;
         }
         public double GetmaxDistance() { return maxDistance; }
         public void SetmaxDistance(double maxDistance) { this.maxDistance = maxDistance; }
@@ -35,6 +40,11 @@ namespace Final_Project_OOP.AbstractClasses
         public override double CalculateEfficiency()
         {
             return base.CalculateEfficiency() + maxDistance * 0.05;
+        }
+
+        public override string ToFileString()
+        {
+            return base.ToFileString() + $",{maxDistance}";
         }
     }
 }

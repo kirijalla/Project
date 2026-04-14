@@ -11,14 +11,23 @@ namespace Final_Project_OOP
     public abstract class Entity
     {
         private int id;
+        private static int currentId = 1;
         private string name;
         private DateTime createdDate;
 
-        public Entity(int id, string name, DateTime createdDate)
+        public Entity(string name, DateTime createdDate)
         {
-            this.id = id;
+            this.id = currentId;
             this.name = name;
             this.createdDate = createdDate;
+            currentId++;
+        }
+
+        protected Entity(Entity other)
+        {
+            this.id = other.id;
+            this.name = other.name;
+            this.createdDate = other.createdDate;
         }
 
         public int Getid() { return id; }

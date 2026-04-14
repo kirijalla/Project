@@ -42,12 +42,10 @@ namespace Final_Project_OOP.FileHandling
 
             while ((line = reader.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split('|');
 
-                Warehouse warehouse = new Warehouse(
-                    parts[0]
-                    );
-
+                Warehouse warehouse = new Warehouse(parts[0]);
+                warehouse.SetId(int.Parse(parts[1]));
                 warehouses.Add(warehouse);
             }
 

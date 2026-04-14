@@ -38,51 +38,57 @@ namespace Final_Project_OOP.FileHandling
             StreamReader reader = new StreamReader(path);
 
             string line;
-
+            workers.Clear();
             while ((line = reader.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+
+                string[] parts = line.Split('|');
 
                 string type = parts[0];
 
                 if (type == "Loader")
                 {
-                    Worker Loader = new Loader(
-                        int.Parse(parts[0]),
-                        parts[1],
-                        DateTime.Parse(parts[2]),
-                        int.Parse(parts[3]),
+                    Worker loader = new Loader(
+                        parts[2],
+                        DateTime.Parse(parts[3]),
                         int.Parse(parts[4]),
-                        bool.Parse(parts[5]),
-                        double.Parse(parts[6])
-                        );
+                        int.Parse(parts[5]),
+                        bool.Parse(parts[6]),
+                        double.Parse(parts[8])
+                    );
 
-                    workers.Add(Loader);
+                    loader.Setid(int.Parse(parts[1]));
+                    loader.SetWarehouseId(int.Parse(parts[7]));
+                    workers.Add(loader);
                 }
                 else if (type == "Driver")
                 {
                     Worker driver = new Driver(
-                        int.Parse(parts[0]),
-                        parts[1],
-                        DateTime.Parse(parts[2]),
-                        int.Parse(parts[3]),
+                        parts[2],
+                        DateTime.Parse(parts[3]),
                         int.Parse(parts[4]),
-                        bool.Parse(parts[5]),
-                        parts[6]
-                        );
+                        int.Parse(parts[5]),
+                        bool.Parse(parts[6]),
+                        parts[8]
+                    );
+
+                    driver.Setid(int.Parse(parts[1]));
+                    driver.SetWarehouseId(int.Parse(parts[7]));
                     workers.Add(driver);
                 }
                 else if (type == "Manager")
                 {
                     Worker manager = new Manager(
-                         int.Parse(parts[0]),
-                         parts[1],
-                         DateTime.Parse(parts[2]),
-                         int.Parse(parts[3]),
-                         int.Parse(parts[4]),
-                         bool.Parse(parts[5]),
-                         int.Parse(parts[6])
-                        );
+                        parts[2],
+                        DateTime.Parse(parts[3]),
+                        int.Parse(parts[4]),
+                        int.Parse(parts[5]),
+                        bool.Parse(parts[6]),
+                        int.Parse(parts[8])
+                    );
+
+                    manager.Setid(int.Parse(parts[1]));
+                    manager.SetWarehouseId(int.Parse(parts[7]));
                     workers.Add(manager);
                 }
            }

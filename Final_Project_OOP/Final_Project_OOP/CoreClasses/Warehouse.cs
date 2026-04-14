@@ -1,4 +1,5 @@
 ﻿using Final_Project_OOP;
+using Final_Project_OOP.AbstractClasses;
 using Final_Project_OOP.CoreClasses;
 using Final_Project_OOP.Exceptions;
 using System;
@@ -28,6 +29,55 @@ public class Warehouse
         currentId++;
     }
 
+    public Warehouse(string name, int id)
+    {
+        this.name = name;
+        this.id = id;
+
+        this.packages = new List<Package>();
+        this.vehicles = new List<Vehicle>();
+        this.workers = new List<Worker>();
+    }
+
+    public Warehouse(Warehouse other)
+    {
+        this.name = other.name;
+        this.id = other.id;
+
+        this.packages = new List<Package>();
+        foreach (var p in other.packages)
+        {
+            this.packages.Add(new Package(p)); 
+        }
+
+        this.vehicles = new List<Vehicle>();
+        foreach (var v in other.vehicles)
+        {
+            if (v is Truck truck)
+                this.vehicles.Add(new Truck(truck));
+            else if (v is Van van)
+                this.vehicles.Add(new Van(van));
+            else if (v is Drone drone)
+                this.vehicles.Add(new Drone(drone));
+        }
+
+        this.workers = new List<Worker>();
+        foreach (var w in other.workers)
+        {
+            if (w is Driver driver)
+                this.workers.Add(new Driver(driver));
+            else if (w is Manager manager)
+                this.workers.Add(new Manager(manager));
+            else if (w is Loader loader)
+                this.workers.Add(new Loader(loader));
+        }
+    }
+
+    public void SetId(int id)
+    {
+        this.id = id;
+    }
+
     public int GetId()
     {
         return id;
@@ -44,51 +94,16 @@ public class Warehouse
 
     public List<Package> GetListPackages()
     {
-        List<Package> packages = new List<Package>();
-
-        foreach (Package package in this.packages)
-        {
-            packages.Add(package);
-        }
-
-        if (packages.Count < 1)
-        {
-            return null;
-        }
         return packages;
     }
 
     public List<Vehicle> GetListVehicles()
     {
-        List<Vehicle> vehicles = new List<Vehicle>();
-
-        foreach (Vehicle vehicle in this.vehicles)
-        {
-            vehicles.Add(vehicle);
-        }
-
-        if (vehicles.Count < 1)
-        {
-            return null;
-        }
-
         return vehicles;
     }
 
     public List<Worker> GetListWorkers()
-    {
-        List<Worker> workers = new List<Worker>();
-
-        foreach (Worker worker in this.workers)
-        {
-            workers.Add(worker);
-        }
-
-        if (workers.Count < 1)
-        {
-            return null;
-        }
-
+    { 
         return workers;
     }
 
@@ -232,6 +247,6 @@ public class Warehouse
 
     public string ToFileString()
     {
-        return $"{name},{id}";
+        return $"{name}|{id}";
     }
 }
